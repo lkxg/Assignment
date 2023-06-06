@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.kaixuan.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="me.kaixuan.entity.User">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="userType" column="user_type" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--添加用户-->
+    <insert id="addUser">
+        insert into user(username,password,email,avatar,user_type)
+        values(#{username},#{password},#{email},#{avatar},2)
+    </insert>
+    <!--更新用户密码-->
+    <update id="updatepwd">
+        update user set password=#{password} where id=#{id}
+    </update>
+    <update id="updateInfo">
+        update user set username=#{username},email=#{email},avatar=#{avatar} where id=#{id}
+    </update>
+    <delete id="deleteUserById">
+        delete from user where id=#{id}
+    </delete>
+    <!--查询所有用户-->
+    <select id="selectAllUser" resultMap="BaseResultMap">
+     select * from user
+    </select>
+    <!--根据电子邮件查用户-->
+    <select id="selectUserByEmail" resultMap="BaseResultMap">
+        select * from user where email=#{email}
+    </select>
+    <!--根据用户名查用户-->
+    <select id="selectUserByUsername" resultMap="BaseResultMap">
+        select * from user where username=#{username}
+    </select>
+    <select id="selectUserById" >
+        select * from user where id=#{id}
+    </select>
+    <select id="selectUserByOneEmail" resultMap="BaseResultMap">
+        select * from user where email=#{email}
+    </select>
+
+</mapper>

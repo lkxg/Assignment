@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background-color: #f8f8f8;
+}
+header {
+    background-color: #007bff;
+    padding: 10px 0;
+}
+h1 {
+    text-align: center;
+    color: #fff;
+}
+main {
+    margin: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+section {
+    flex-basis: 48%;
+}
+h2 {
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+h3 {
+    font-size: 1em;
+    margin: 10px 0;
+    color: #555;
+}
+form label {
+    font-size: 1em;
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+    color: #555;
+}
+form input {
+    font-size: 1em;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ddd;
+}
+form button {
+    font-size: 1em;
+    padding: 10px 30px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+form button:hover {
+    background-color: #0069d9;
+}
+.avatar-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.avatar-list label {
+    margin-right: 20px;
+    cursor: pointer;
+}
+.avatar-list img {
+    border-radius: 50%;
+    box-shadow: 0 0 5px #ddd;
+    transition: all 0.2s ease-in-out;
+}
+.avatar-list img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #ddd;
+}
+a {
+    color: #619ef5;
+    text-decoration: none;
+}
+ a:hover {
+    color: #0069d9;
+}

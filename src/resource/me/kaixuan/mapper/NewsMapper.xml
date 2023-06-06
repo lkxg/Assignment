@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.kaixuan.mapper.NewsMapper">
+    <resultMap id="BaseResultMap" type="me.kaixuan.entity.News">
+        <id property="nId" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="LONGNVARCHAR"/>
+        <result property="publishTime" column="public_time" jdbcType="TIMESTAMP"/>
+        <result property="authorId" column="author_id" jdbcType="INTEGER"/>
+        <result property="statusId" column="status_id" jdbcType="INTEGER"/>
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
+        <result property="abstracts" column="abstracts" jdbcType="VARCHAR"/>
+        <result property="reprint" column="reprint" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="newsAndUsers" type="me.kaixuan.entity.News">
+        <id property="nId" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="LONGNVARCHAR"/>
+        <result property="publishTime" column="publish_time" jdbcType="TIMESTAMP"/>
+        <result property="authorId" column="author_id" jdbcType="INTEGER"/>
+        <result property="statusId" column="status_id" jdbcType="INTEGER"/>
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
+        <result property="abstracts" column="abstracts" jdbcType="VARCHAR"/>
+        <result property="reprint" column="reprint" jdbcType="VARCHAR"/>
+        <association property="user" javaType="me.kaixuan.entity.User">
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <insert id="insertNews">
+        insert into news (title, content, publish_time, author_id, status_id, category_id, cover, abstracts, reprint)
+        values (#{title,jdbcType=VARCHAR}, #{content,jdbcType=LONGNVARCHAR}, #{publishTime,jdbcType=DATE}, #{authorId,jdbcType=INTEGER}, #{statusId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{abstracts,jdbcType=VARCHAR}, #{reprint,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateNewsStatus">
+        update news set status_id = 2 where id = #{id}
+    </update>
+    <update id="updateNewsStatusReject">
+        update news set status_id = 3 where id = #{id}
+    </update>
+    <select id="selectAllNews" resultMap="newsAndUsers">
+        select n.id,n.title,n.content,publish_time,n.author_id,n.status_id,n.category_id,n.cover,n.abstracts,n.reprint,u.username  from news n, user u where n.author_id = u.id
+    </select>
+</mapper>
