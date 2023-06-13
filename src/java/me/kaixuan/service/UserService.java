@@ -11,13 +11,17 @@ public interface UserService {
 
     User selectUserByUsername(String userNameOrMail, String password);
 
-    void selectUserById(Integer id);
+    User selectUserById(Integer id);
 
     void updatepwd(String password, Integer id);
 
     User selectUserByOneEmail(String email);
 
-    void updateInfo(String username, String email, String avatar, Integer id);
+    void updateInfo(String username, String email, String avatar, Integer id, Integer userType);
 
     void deleteUserById(Integer user);
+
+    List<User> findUserByUsername(String search);
+
+    List<User> findUserByEmail(String search);
 }

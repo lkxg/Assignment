@@ -1,10 +1,7 @@
 package me.kaixuan.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class PageController {
@@ -27,11 +24,6 @@ public class PageController {
          return "newstype";
      }
 
-     @RequestMapping("/usermanage")
-    public String usermanage() {
-         return "usermanage";
-     }
-
      @RequestMapping("/release")
     public String release() {
             return "release";
@@ -44,7 +36,7 @@ public class PageController {
 
     @RequestMapping("/dianying")
     public String dianying(){
-        return "dianying";
+        return "searchnews";
     }
 
     @RequestMapping("/keji")
@@ -54,7 +46,7 @@ public class PageController {
 
     @RequestMapping("/tiyu")
     public String tiyu(){
-        return "tiyu";
+        return "newstype";
     }
 
     @RequestMapping("/youxi")
@@ -83,8 +75,8 @@ public class PageController {
     public String head(){
         return "head";
     }
-    @RequestMapping("/search")
-    public String search(){
-        return "search";
+    @RequestMapping("/notlogin")
+    public String notlogin(){
+        return "notlogin";
     }
 }

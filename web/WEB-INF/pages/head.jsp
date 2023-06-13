@@ -1,23 +1,25 @@
-<%@ page import="me.kaixuan.service.UserService" %>
+<%@ page import="me.kaixuan.entity.News" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>首页</title>
   <link rel="stylesheet" href="/css/head.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript" src="/js/head.js"></script>
 </head>
 <body>
-<div class="navbar" style="display: flex;">
+<div class="navbar" style="display: flex;<%=request.getAttribute("news")==null?"":"opacity:0.6"%>">
   <a href="main">首页</a>
-  <a href="yule">娱乐</a>
-  <a href="tiyu">体育</a>
-  <a href="keji">科技</a>
-  <a href="dianying">电影</a>
-  <a href="youxi">游戏</a>
-  <a href="ruanjian">软件</a>
-  <a href="qita" style="margin-right: 0px;">其他</a>
+  <a href="/news?newsType=1">娱乐</a>
+  <a href="/news?newsType=2">体育</a>
+  <a href="/news?newsType=3">科技</a>
+  <a href="/news?newsType=4">电影</a>
+  <a href="/news?newsType=5">游戏</a>
+  <a href="/news?newsType=6">软件</a>
+  <a href="/news?newsType=7" style="margin-right: 0px;">其他</a>
   <form action="/search" class="search-bar" style="display: flex;padding-top: 20px;justify-content: flex-end;">
-    <input type="search" name="search" pattern=".*\S.*" required style="margin-bottom: 20px;font-size: 16px;">
+    <input type="search" name="searchTitle" pattern=".*\S.*" required style="margin-bottom: 20px;font-size: 16px;">
     <button class="search-btn" type="submit">
       <span>Search</span>
     </button>
@@ -55,12 +57,13 @@
     if (usernameValue != null&& passwordValue != null) {
       request.getSession().setAttribute("username", usernameValue);
       request.getSession().setAttribute("password", passwordValue);
+      request.getSession().setAttribute("avatarValue", avatarValue);
     }
     if (username && password) {
   %>
   <div class="dropdown">
-    <button class="dropbtn" onclick="myFunction()">
-      <img src= "<%=avatarValue%>" class="avatar">
+    <button class="dropbtn" onclick="myFunction()" style="padding-top: 15px;padding-bottom: 15px;">
+      <img src= "${avatarValue}"  class="avatar" style="width: 50px ; height: 50px" >
       <%=usernameValue%>
       <i class="fa fa-caret-down"></i>
     </button>
@@ -70,7 +73,6 @@
         if (userType.equals("3")){
 %>
         <a href="/usermanage">用户管理</a>
-        <a href="/newsmanage">新闻管理</a>
         <a href="/check">新闻审核</a>
         <a href="/release">新闻发布</a>
         <a href="/mynews">我的新闻</a>

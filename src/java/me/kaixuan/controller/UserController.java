@@ -1,5 +1,7 @@
 package me.kaixuan.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import me.kaixuan.entity.User;
 import me.kaixuan.service.UserService;
 import me.kaixuan.utils.SendMail;
@@ -15,12 +17,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Controller
@@ -29,8 +31,54 @@ public class UserController {
     private UserService userService;
     //密码正则表达式
     public String regex ="\\S*(?=\\S{6,})(?=\\S*\\d)(?=\\S*[A-Z])(?=\\S*[a-z])(?=\\S*[!@#$%^&amp;*? ])\\S*";
+    //邮箱正则表达式
+    String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
     //验证码
     String code = String.valueOf((int) ((Math.random()*9+1)*100000));
+    @RequestMapping("/deleteuser")
+    public String deleteUser(HttpServletRequest request,Integer userId) {
+        userService.deleteUserById(userId);
+        request.setAttribute("msg","删除成功！" );
+        return "forward:usermanage";
+    }
+    @RequestMapping("/adduser")
+    public String addUser(User user,HttpServletRequest request) {
+        user.setAvatar("https://www.helloimg.com/images/2023/05/24/oJs0km.jpg");
+        userService.addUser(user);
+        request.setAttribute("msg","添加成功！" );
+        return "forward:usermanage";
+    }
+    @RequestMapping("/usermanage")
+    public String userManage(HttpServletRequest request,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "8") Integer pageSize,String search) {
+        //分页
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> users = userService.selectAllUser();
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        request.setAttribute("pageInfo", pageInfo);
+        request.setAttribute("userList", pageInfo.getList());
+        //搜索
+        if (search!=null){
+            if (Pattern.matches(regEx1,search)){
+                List<User> user = userService.findUserByEmail(search);
+                if (user!=null){
+                    request.setAttribute("searchList",user);
+                    return "usermanage";
+                }else {
+                    request.setAttribute("msg","没有找到该用户！" );
+                }
+            }else {
+                List<User> user = userService.findUserByUsername(search);
+                if (user!=null){
+                    request.setAttribute("searchList",user);
+                    return "usermanage";
+                }else {
+                    request.setAttribute("msg","没有找到该用户！" );
+                }
+            }
+
+        }
+        return "usermanage";
+    }
     @RequestMapping("/cancelout")
     public String cancelOut(HttpServletRequest request, HttpServletResponse response) {
         String oldpwd = request.getParameter("old-password");
@@ -67,10 +115,15 @@ public class UserController {
     }
     @RequestMapping("/updateinfo")
     public String updateInfo(@RequestParam("file") MultipartFile file,HttpServletRequest request, HttpServletResponse response) {
-        User user = (User) request.getSession().getAttribute("user");
+        User user = request.getSession().getAttribute("userManage")==null?((User) request.getSession().getAttribute("user")):((User) request.getSession().getAttribute("userManage"));
+        boolean isAmdin = request.getSession().getAttribute("userManage")==null?false:true;
+        Integer userType = null;
+        if (isAmdin){
+             userType = request.getParameter("userType").equals("common")?2:3;
+        }
         String username = request.getParameter("username");
         String email = request.getParameter("email");
-        String avatar = request.getParameter("avatar")==null?"https://www.helloimg.com/images/2023/05/24/oJs0km.jpg":request.getParameter("avatar");
+        String avatar = request.getParameter("avatar")==null?user.getAvatar():request.getParameter("avatar");
         Cookie[] cookies = request.getCookies();
         String path = null;
         if (!file.isEmpty()) {
@@ -87,18 +140,19 @@ public class UserController {
             avatar = path;
         }
         if (avatar.equals("avatar1")){
-            avatar = "https://www.helloimg.com/images/2023/05/24/oJs0km.jpg";
+            avatar = "https://www.helloimg.com/images/2023/05/26/oJpm6S.png";
         }
         if (avatar.equals("avatar2")){
-            avatar = "https://www.helloimg.com/images/2023/05/29/oJjukm.png";
+            avatar = "https://www.helloimg.com/images/2023/06/07/osxC5E.gif";
         }
         if (avatar.equals("avatar3")){
-            avatar = "https://www.helloimg.com/images/2023/05/29/oJu5ah.png";
+            avatar = "https://www.helloimg.com/images/2023/06/07/osqySu.gif";
         }
         if (avatar.equals("avatar4")){
-            avatar = "https://www.helloimg.com/images/2023/05/29/oJjj90.png";
+            avatar = "https://www.helloimg.com/images/2023/06/07/osx5pv.gif";
         }
-        userService.updateInfo(username,email,avatar,user.getId());
+        userService.updateInfo(username,email,avatar,user.getId(),userType);
+        if (!isAmdin){
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("avatar")) {
                 cookie.setMaxAge(0);
@@ -115,7 +169,13 @@ public class UserController {
                 response.addCookie(cookie1);
             }
         }
-        return "redirect:info";
+        }
+        if (isAmdin) {
+            request.setAttribute("msg", "修改成功");
+            return "forward:info?userId=" + user.getId();
+        }else {
+            return "redirect:info";
+        }
     }
     @RequestMapping("/fgpwd")
     public String forgetpwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -144,7 +204,7 @@ public class UserController {
     }
 
     @RequestMapping("/main")
-    public String mainpage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String mainpage() throws ServletException, IOException {
             return "main";
     }
     @RequestMapping("/updatepwd")
@@ -195,37 +255,36 @@ public class UserController {
         return "info";
     }
     @RequestMapping("/info")
-    public String info(HttpServletRequest request, HttpServletResponse response){
-        Cookie[] cookies = request.getCookies();
-        String username = "";
-        String password = "";
-        String userTpye = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("username".equals(cookie.getName())) {
-                    username = cookie.getValue();
-                }
-                if ("password".equals(cookie.getName())) {
-                    password = cookie.getValue();
-                }
-                if ("usertype".equals(cookie.getName())) {
-                    userTpye = cookie.getValue();
+    public String info(HttpServletRequest request, Integer userId){
+        if (userId != null){
+            User userManage = userService.selectUserById(userId);
+            request.getSession().setAttribute("userManage",userManage);
+        } else {
+            request.getSession().removeAttribute("userManage");
+        }
+            Cookie[] cookies = request.getCookies();
+            String username = "";
+            String password = "";
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("username".equals(cookie.getName())) {
+                        username = cookie.getValue();
+                    }
+                    if ("password".equals(cookie.getName())) {
+                        password = cookie.getValue();
+                    }
                 }
             }
-        }
-        User user = userService.selectUserByUsername(username, password);
-        System.out.println(user);
-        System.out.println(userTpye);
-        if (Integer.parseInt(userTpye)==3){
-            System.out.println("进入");
-        }
-        request.getSession().setAttribute("user", user);
-        return "info";
+            User user = userService.selectUserByUsername(username, password);
+            request.getSession().setAttribute("user", user);
+            if (userId!=null&&user.getId()==userId){
+                return "redirect:info";
+            }
+            return "info";
     }
     //登录
     @RequestMapping("/signup")
     public String signup(String userNameOrMail, String password, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
         User user = null;
         if (Pattern.matches(regEx1,userNameOrMail)){
              user = userService.selectUserByEmail(userNameOrMail, password);
@@ -323,7 +382,7 @@ public class UserController {
         request.getSession().removeAttribute("user");
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("username")||cookie.getName().equals("password")||cookie.getName().equals("avatar")||cookie.getName().equals("usertype")){
+            if (cookie.getName().equals("username")||cookie.getName().equals("password")||cookie.getName().equals("avatar")||cookie.getName().equals("usertype")||cookie.getName().equals("JSESSIONID")){
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }

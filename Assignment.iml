@@ -30,6 +30,10 @@
         <fileset id="web springmvc-servlet servlet context" name="MVC springmvc-servlet servlet context" removed="true">
           <file>file://$MODULE_DIR$/src/resource/springmvc-servlet.xml</file>
         </fileset>
+        <fileset id="fileset2" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/resource/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/resource/springmvc-servlet.xml</file>
+        </fileset>
       </configuration>
     </facet>
   </component>
@@ -50,6 +54,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="plugins" level="application" />
+    <orderEntry type="library" name="jquery-3.1.1" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="jquery-ui" level="application" />
   </component>
 </module>

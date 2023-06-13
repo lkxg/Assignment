@@ -33,4 +33,29 @@ public class NewsServiceImpl implements NewsService {
         newsMapper.updateNewsStatusReject(id);
     }
 
+    @Override
+    public void deleteNews(Integer id) {
+        newsMapper.deleteNews(id);
+    }
+
+    @Override
+    public List<News> selectNewsByAuthorId(Integer id) {
+        return newsMapper.selectNewsByAuthorId(id);
+    }
+
+    @Override
+    public News selectNewsById(Integer newsId) {
+        return newsMapper.selectNewsById(newsId);
+    }
+
+    @Override
+    public List<News> selectNewsByCategoryId(Integer i) {
+        return newsMapper.selectNewsByCategoryId(i);
+    }
+
+    @Override
+    public List<News> selectNews(String search) {
+        return newsMapper.selectNews(search);
+    }
+
 }

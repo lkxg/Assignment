@@ -36,6 +36,9 @@
     background-color: #619ef5;
     color: black;
 }
+.navbar a:visited {
+    background-color: #619ef5;
+}
 /* Dropdown content (hidden by default) */
 .dropdown-content {
     display: none;

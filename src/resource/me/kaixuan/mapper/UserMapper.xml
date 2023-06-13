@@ -22,7 +22,13 @@
         update user set password=#{password} where id=#{id}
     </update>
     <update id="updateInfo">
-        update user set username=#{username},email=#{email},avatar=#{avatar} where id=#{id}
+        update user <set>
+            <if test="username!=null">username=#{username},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="avatar!=null and avatar!=''">avatar=#{avatar},</if>
+            <if test="userType!=null">user_type=#{userType},</if>
+    </set>
+        where id=#{id}
     </update>
     <delete id="deleteUserById">
         delete from user where id=#{id}
@@ -39,11 +45,17 @@
     <select id="selectUserByUsername" resultMap="BaseResultMap">
         select * from user where username=#{username}
     </select>
-    <select id="selectUserById" >
+    <select id="selectUserById" resultMap="BaseResultMap">
         select * from user where id=#{id}
     </select>
     <select id="selectUserByOneEmail" resultMap="BaseResultMap">
         select * from user where email=#{email}
+    </select>
+    <select id="findUserByUsername" resultMap="BaseResultMap">
+        select * from user where username like CONCAT('%',#{username},'%')
+    </select>
+    <select id="findUserByEmail" resultMap="BaseResultMap">
+        select * from user where email like #{email}
     </select>
 
 </mapper>

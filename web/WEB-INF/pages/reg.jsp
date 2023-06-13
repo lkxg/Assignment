@@ -1,4 +1,4 @@
-        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <meta charset="UTF-8">
 <head>
@@ -24,28 +24,28 @@
         <div class="wrapper" style="height: 525px;">
             <form id="login" tabindex="502" action="" method="post" name="form1" style="padding-top: 40px;" >
                 <h3>注册</h3>
-                    <%
-                        String userName = "";
-                        String password = "";
-                        String mail = "";
-                        String password2 = "";
-                        String code = "";
-                        if (request.getAttribute("userName") != null&&request.getAttribute("userName")!="") {
-                           userName= request.getAttribute("userName").toString();
-                        }
-                        if (request.getAttribute("password") != null&&request.getAttribute("password")!="") {
-                           password = request.getAttribute("password").toString();
-                        }
-                        if (request.getAttribute("mail") != null&&request.getAttribute("mail")!=""){
-                             mail = request.getAttribute("mail").toString();
-                        }
-                        if (request.getAttribute("password2") != null&&request.getAttribute("password2")!="" ){
-                            password2 = request.getAttribute("password2").toString();
-                        }
-                        if (request.getAttribute("code") != null&&request.getAttribute("code")!="" ){
-                            code = request.getAttribute("code").toString();
-                        }
-                    %>
+                <%
+                    String userName = "";
+                    String password = "";
+                    String mail = "";
+                    String password2 = "";
+                    String code = "";
+                    if (request.getAttribute("userName") != null&&request.getAttribute("userName")!="") {
+                        userName= request.getAttribute("userName").toString();
+                    }
+                    if (request.getAttribute("password") != null&&request.getAttribute("password")!="") {
+                        password = request.getAttribute("password").toString();
+                    }
+                    if (request.getAttribute("mail") != null&&request.getAttribute("mail")!=""){
+                        mail = request.getAttribute("mail").toString();
+                    }
+                    if (request.getAttribute("password2") != null&&request.getAttribute("password2")!="" ){
+                        password2 = request.getAttribute("password2").toString();
+                    }
+                    if (request.getAttribute("code") != null&&request.getAttribute("code")!="" ){
+                        code = request.getAttribute("code").toString();
+                    }
+                %>
                 <div class="name">
                     <input type="text" name="userName" value="${userName}" required="required">
                     <label>昵称</label>
@@ -68,9 +68,9 @@
                     <label>邮箱验证码</label>
                 </div>
                 <div class="submit">
-                    <button class="dark" onclick="form1.action='/sendmail';form1.submit();">获取验证码</button>
-                    &emsp; &emsp; &emsp;
-                    <button class="dark" onclick="form1.action='/login';form1.submit();">&emsp;&ensp;注册&ensp;&emsp;</button>
+                    <button class="dark" onclick="form1.action='/sendmail';form1.submit();">&emsp;获取验证码&emsp;</button>
+
+                    <button class="dark" onclick="form1.action='/login';form1.submit();">&emsp;&ensp;&emsp;&nbsp;注册&nbsp;&emsp;&emsp;&emsp;</button>
                 </div>
                 <%
                     String msg = (String) request.getAttribute("msg");
@@ -89,9 +89,8 @@
                     <input type="password" name="password" required="required">
                     <label>密码</label>
                 </div>
-               &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 <a href="/forgetpwd">忘记密码?</a>
-                <br>
                 <br>
                 <div class="submit">
                     <button class="dark">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;登录&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</button>

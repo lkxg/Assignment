@@ -150,7 +150,8 @@
         </div>
         <br>
         <button type="submit">发布</button>
-        <button type="reset" style="background-color: red;float: right">取消</button>
+        &emsp;
+        <button type="reset" style="background-color: red;">取消</button>
         <br>
         <br>
         <% if (request.getAttribute("msg") != null) { %>

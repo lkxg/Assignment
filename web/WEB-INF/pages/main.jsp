@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/main.css">
     <style type="text/javascript" src="/js/main.js"></style>
 </head>
 <body style="margin: 0px">
 <jsp:include page="head.jsp"/>
-<main style="padding-top: 50.15px;padding-bottom: 53px;">
+<main style="padding-top: 50.15px;padding-bottom: 50px;">
     <section id="hero" style="margin-bottom: 0px;">
-        <h1>欢迎来到我们的主页</h1>
-        <p>我们将为您带来最新的新闻，最有趣的娱乐，最刺激的体育赛事，以及最新鲜的科技资讯!</p>
+       <h1>欢迎来到我们的主页</h1>
     </section>
 </main>
 <footer>

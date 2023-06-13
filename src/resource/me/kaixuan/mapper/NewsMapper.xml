@@ -7,7 +7,7 @@
         <id property="nId" column="id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="LONGNVARCHAR"/>
-        <result property="publishTime" column="public_time" jdbcType="TIMESTAMP"/>
+        <result property="publishTime" column="publish_time" jdbcType="TIMESTAMP"/>
         <result property="authorId" column="author_id" jdbcType="INTEGER"/>
         <result property="statusId" column="status_id" jdbcType="INTEGER"/>
         <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
@@ -41,7 +41,22 @@
     <update id="updateNewsStatusReject">
         update news set status_id = 3 where id = #{id}
     </update>
+    <delete id="deleteNews">
+        delete from news where id = #{id}
+    </delete>
     <select id="selectAllNews" resultMap="newsAndUsers">
         select n.id,n.title,n.content,publish_time,n.author_id,n.status_id,n.category_id,n.cover,n.abstracts,n.reprint,u.username  from news n, user u where n.author_id = u.id
+    </select>
+    <select id="selectNewsByAuthorId" resultMap="BaseResultMap">
+        select * from news where author_id = #{id}
+    </select>
+    <select id="selectNewsById" resultMap="newsAndUsers">
+        select n.id,n.title,n.content,publish_time,n.author_id,n.status_id,n.category_id,n.cover,n.abstracts,n.reprint,u.username  from news n, user u where n.author_id = u.id and n.id = #{id}
+    </select>
+    <select id="selectNewsByCategoryId" resultMap="newsAndUsers">
+      select n.id,n.title,n.content,publish_time,n.author_id,n.status_id,n.category_id,n.cover,n.abstracts,n.reprint,u.username  from news n, user u where n.author_id = u.id and category_id = #{i}
+    </select>
+    <select id="selectNews" resultMap="BaseResultMap">
+        select * from news where title like CONCAT('%',#{search},'%')
     </select>
 </mapper>

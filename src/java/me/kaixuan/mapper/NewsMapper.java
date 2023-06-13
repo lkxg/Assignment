@@ -13,4 +13,14 @@ public interface NewsMapper {
     void updateNewsStatus(Integer id);
 
     void updateNewsStatusReject(Integer id);
+
+    void deleteNews(Integer id);
+
+    List<News> selectNewsByAuthorId(Integer id);
+
+    News selectNewsById(Integer newsId);
+
+    List<News> selectNewsByCategoryId(Integer i);
+
+    List<News> selectNews(String search);
 }

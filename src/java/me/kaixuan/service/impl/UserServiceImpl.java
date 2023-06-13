@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void selectUserById(Integer id) {
-        userMapper.selectUserById(id);
+    public User selectUserById(Integer id) {
+       return userMapper.selectUserById(id);
     }
 
     @Override
@@ -48,12 +48,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateInfo(String username, String email, String avatar, Integer id) {
-        userMapper.updateInfo(username,email,avatar,id);
+    public void updateInfo(String username, String email, String avatar, Integer id, Integer userType) {
+        userMapper.updateInfo(username,email,avatar,id,userType);
     }
 
     @Override
     public void deleteUserById(Integer user) {
         userMapper.deleteUserById(user);
+    }
+
+    @Override
+    public List<User> findUserByUsername(String search) {
+       return userMapper.findUserByUsername(search);
+    }
+
+    @Override
+    public List<User> findUserByEmail(String search) {
+      return userMapper.findUserByEmail(search);
     }
 }

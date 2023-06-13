@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.kaixuan.mapper.CommentMapper">
+<resultMap id="BaseResultMap" type="me.kaixuan.entity.Comment">
+    <id property="id" column="id" jdbcType="INTEGER"/>
+    <result property="content" column="content" jdbcType="LONGNVARCHAR"/>
+    <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
+    <result property="commenterId" column="commenter_id" jdbcType="INTEGER"/>
+    <result property="newsId" column="news_id" jdbcType="INTEGER"/>
+</resultMap>
+    <resultMap id="commentAndUser" type="me.kaixuan.entity.Comment">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
+        <result property="commenterId" column="commenter_id" jdbcType="INTEGER"/>
+        <result property="newsId" column="news_id" jdbcType="INTEGER"/>
+        <association property="user" javaType="me.kaixuan.entity.User">
+            <id property="id" column="uid" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <insert id="addComment">
+        insert into comment(news_id,content, comment_time, commenter_id)
+        values(#{newsId,jdbcType=INTEGER},#{content,jdbcType=LONGNVARCHAR}, #{commentTime,jdbcType=TIMESTAMP}, #{commenterId,jdbcType=INTEGER})
+    </insert>
+    <delete id="deleteComment">
+        delete from comment where id=#{commentid}
+    </delete>
+    <select id="selectCommentByNewsId" resultMap="commentAndUser">
+        select c.*,u.username from comment c,user u
+        where c.commenter_id=u.id and c.news_id=#{newsId} order by c.comment_time desc
+    </select>
+</mapper>

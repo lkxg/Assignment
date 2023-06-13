@@ -1,9 +1,11 @@
+<%@ page import="me.kaixuan.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>个人资料</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/info.css">
 </head>
 <body>
@@ -12,35 +14,53 @@
     <section>
         <h2>基本信息</h2>
         <form action="" name="form1">
+            <%  User userManage = (User) request.getSession().getAttribute("userManage");
+                User user = (User) request.getSession().getAttribute("user");
+                boolean isAdmin = false;
+                if(userManage!=null){
+                    isAdmin = true;
+                }
+                %>
             <label for="username">用户ID：</label>
-            <input type="text" id="username" name="userId" value="${user.id}" disabled>
+            <input type="text" id="username" name="userId" value="<%=isAdmin?userManage.getId():user.getId()%>" disabled>
             <br>
+            <%
+            if(userManage!=null){
+            isAdmin = true;
+            %>
+            <label for="userType1">用户级别：</label>
+            <label for="userType1">
+            <input id="userType1" name="userType" type="radio" value="common" <%=userManage.getUserType()==2?"checked":""%>>普通用户</label>
+            <label for="userType2">
+            <input id="userType2" name="userType" type="radio" value="admin" <%=userManage.getUserType()==3?"checked":""%>>管理员</label>
+            <%}else{%>
             <label for="ok">用户级别：</label>
             <input type="text" id="ok" name="userType" value=${user.userType==3?"管理员":"普通用户"} disabled>
+            <%}%>
             <br>
             <label for="nickname">用户昵称：</label>
-            <input type="text" id="nickname" name="username" value="${user.username}">
+            <input type="text" id="nickname" name="username" value="<%=isAdmin?userManage.getUsername():user.getUsername()%>">
             <br>
             <label for="email">邮箱：</label>
-            <input type="email" id="email" name="email" value="${user.email}">
+            <input type="email" id="email" name="email" value="<%=isAdmin?userManage.getEmail():user.getEmail()%>">
             <br>
             <h3>选择一个你喜欢的头像：</h3>
             <div class="avatar-list">
                 <label>
                     <input type="radio" name="avatar" value="avatar1">
-                    <img src="https://www.helloimg.com/images/2023/05/24/oJs0km.jpg" alt="头像1" width="100">
+                    <img src="https://www.helloimg.com/images/2023/05/26/oJpm6S.png" alt="头像1" width="100" height="100">
                 </label>
                 <label>
                     <input type="radio" name="avatar" value="avatar2">
-                    <img src="https://www.helloimg.com/images/2023/05/29/oJjukm.png" alt="头像2" width="100">
+                    <img src="https://www.helloimg.com/images/2023/06/07/osxC5E.gif" alt="头像2" width="100">
                 </label>
                 <label>
                     <input type="radio" name="avatar" value="avatar3">
-                    <img src="https://www.helloimg.com/images/2023/05/29/oJu5ah.png" alt="头像3" width="100">
+                    <img src="https://www.helloimg.com/images/2023/06/07/osqySu.gif" alt="头像3" width="100">
                 </label>
                 <label>
                     <input type="radio" name="avatar" value="avatar4">
-                    <img src="https://www.helloimg.com/images/2023/05/29/oJjj90.png" alt="头像4" width="100">
+                    <img src="https://www.helloimg.com/images/2023/06/07/osx5pv.gif" alt="头像4" width="100">
                 </label>
             </div>
            <h3>或上传一个头像：</h3>

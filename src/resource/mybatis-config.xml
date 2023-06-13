@@ -6,4 +6,13 @@
     <typeAliases>
         <package name="me.kaixuan.entity"/>
     </typeAliases>
+    <plugins>
+        <!--分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+            <property name="reasonable" value="true"/>
+            <property name="supportMethodsArguments" value="true"/>
+            <property name="params" value="count=countSql"/>
+        </plugin>
+    </plugins>
 </configuration>
