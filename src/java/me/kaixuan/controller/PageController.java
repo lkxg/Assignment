@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PageController {
+    @RequestMapping("/main")
+    public String mainpage(){
+        return "main";
+    }
     @RequestMapping("/success")
     public String success(){
         return "success";

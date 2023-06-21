@@ -9,7 +9,7 @@
   <script type="text/javascript" src="/js/head.js"></script>
 </head>
 <body>
-<div class="navbar" style="display: flex;<%=request.getAttribute("news")==null?"":"opacity:0.6"%>">
+<div class="navbar" style="display: flex;">
   <a href="main">首页</a>
   <a href="/news?newsType=1">娱乐</a>
   <a href="/news?newsType=2">体育</a>
@@ -63,7 +63,7 @@
   %>
   <div class="dropdown">
     <button class="dropbtn" onclick="myFunction()" style="padding-top: 15px;padding-bottom: 15px;">
-      <img src= "${avatarValue}"  class="avatar" style="width: 50px ; height: 50px" >
+      <img src="${cookie.avatar.value}"  class="avatar" style="width: 50px ; height: 50px" >
       <%=usernameValue%>
       <i class="fa fa-caret-down"></i>
     </button>

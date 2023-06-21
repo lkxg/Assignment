@@ -4,11 +4,28 @@
 <head>
     <title>注册</title>
     <meta charset="UTF-8">
-    <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/reg.css">
-    <script src="/js/reg.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reg.css">
+    <script src="${pageContext.request.contextPath}/js/reg.js"></script>
+    <style>
+        .site-link {
+            padding: 5px 15px;
+            position: fixed;
+            z-index: 99999;
+            background: #fff;
+            box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+            right: 30px;
+            bottom: 30px;
+            border-radius: 10px;
+        }
+
+        .site-link img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
 </head>
 <body>
 <div class="body">
@@ -22,36 +39,14 @@
             <button>登录</button>
         </div>
         <div class="wrapper" style="height: 525px;">
-            <form id="login" tabindex="502" action="" method="post" name="form1" style="padding-top: 40px;" >
+            <form id="login" tabindex="502" action="" method="post" name="form1" style="padding-top: 40px;">
                 <h3>注册</h3>
-                <%
-                    String userName = "";
-                    String password = "";
-                    String mail = "";
-                    String password2 = "";
-                    String code = "";
-                    if (request.getAttribute("userName") != null&&request.getAttribute("userName")!="") {
-                        userName= request.getAttribute("userName").toString();
-                    }
-                    if (request.getAttribute("password") != null&&request.getAttribute("password")!="") {
-                        password = request.getAttribute("password").toString();
-                    }
-                    if (request.getAttribute("mail") != null&&request.getAttribute("mail")!=""){
-                        mail = request.getAttribute("mail").toString();
-                    }
-                    if (request.getAttribute("password2") != null&&request.getAttribute("password2")!="" ){
-                        password2 = request.getAttribute("password2").toString();
-                    }
-                    if (request.getAttribute("code") != null&&request.getAttribute("code")!="" ){
-                        code = request.getAttribute("code").toString();
-                    }
-                %>
                 <div class="name">
-                    <input type="text" name="userName" value="${userName}" required="required">
+                    <input type="text" name="username" value="${userName}" required="required">
                     <label>昵称</label>
                 </div>
                 <div class="mail">
-                    <input type="mail" name="mail" value="${mail}" required="required">
+                    <input type="mail" name="email" value="${mail}" required="required">
                     <label>邮箱</label>
                 </div>
                 <div class="passwd">
@@ -68,16 +63,12 @@
                     <label>邮箱验证码</label>
                 </div>
                 <div class="submit">
-                    <button class="dark" onclick="form1.action='/sendmail';form1.submit();">&emsp;获取验证码&emsp;</button>
+                    <button class="dark" onclick="form1.action='/sendmail';form1.submit();">&emsp;获取验证码&emsp;
+                    </button>
 
                     <button class="dark" onclick="form1.action='/login';form1.submit();">&emsp;&ensp;&emsp;&nbsp;注册&nbsp;&emsp;&emsp;&emsp;</button>
                 </div>
-                <%
-                    String msg = (String) request.getAttribute("msg");
-                    if (msg != null) {
-                %>
-                <p style="color: red;"><%=msg%></p>
-                <%}%>
+                <p style="color: red;font-weight: bold;">${msg}</p>
             </form>
             <form id="register" tabindex="500" action="/signup" method="post" style="padding-bottom: 300px;">
                 <h3>登录</h3>
@@ -95,33 +86,10 @@
                 <div class="submit">
                     <button class="dark">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;登录&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</button>
                 </div>
-                <%
-                    String msg2 = (String) request.getAttribute("msg2");
-                    if (msg2 != null) {
-                %>
-                <p style="color: red;"><%=msg2%></p>
-                <%}%>
+                <p style="color: red;font-weight: bold;">${msg2}</p>
             </form>
         </div>
     </div>
 </div>
-
-
-<style type="text/css">
-    .site-link{
-        padding: 5px 15px;
-        position: fixed;
-        z-index: 99999;
-        background: #fff;
-        box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
-        right: 30px;
-        bottom: 30px;
-        border-radius: 10px;
-    }
-    .site-link img{
-        width: 30px;
-        height: 30px;
-    }
-</style>
 </body>
 </html>

@@ -12,7 +12,7 @@
 <jsp:include page="head.jsp"/>
 <main style="padding-top: 50.15px;padding-bottom: 50px;">
     <section id="hero" style="margin-bottom: 0px;">
-       <h1>欢迎来到我们的主页</h1>
+       <h1 style="text-shadow: 2px 2px 5px #ccc;">欢迎来到主页</h1>
     </section>
 </main>
 <footer>

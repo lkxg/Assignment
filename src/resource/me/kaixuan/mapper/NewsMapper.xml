@@ -54,7 +54,7 @@
         select n.id,n.title,n.content,publish_time,n.author_id,n.status_id,n.category_id,n.cover,n.abstracts,n.reprint,u.username  from news n, user u where n.author_id = u.id and n.id = #{id}
     </select>
     <select id="selectNewsByCategoryId" resultMap="newsAndUsers">
-      select n.id,n.title,n.content,publish_time,n.author_id,n.status_id,n.category_id,n.cover,n.abstracts,n.reprint,u.username  from news n, user u where n.author_id = u.id and category_id = #{i}
+      select n.id,n.title,n.content,publish_time,n.author_id,n.status_id,n.category_id,n.cover,n.abstracts,n.reprint,u.username  from news n, user u where n.author_id = u.id and category_id = #{i} and status_id = 2
     </select>
     <select id="selectNews" resultMap="BaseResultMap">
         select * from news where title like CONCAT('%',#{search},'%')

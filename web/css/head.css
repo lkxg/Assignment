@@ -33,11 +33,11 @@
 }
 /* Add a red background color to navbar dropdown links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #619ef5;
-    color: black;
+    background-color: #03A9F4;
+    color: #ffffff;
 }
-.navbar a:visited {
-    background-color: #619ef5;
+.dropdown-content a:hover {
+    background-color: #007bb4;
 }
 /* Dropdown content (hidden by default) */
 .dropdown-content {
@@ -47,18 +47,14 @@
 }
 /* Links inside the dropdown */
 .dropdown-content a {
+    background-color:#03A9F4;
     float: none;
-    color: #000000;
-    padding: 12px 16px;
+    color: #ffffff;
+    padding: 14px 34px;
     text-decoration: none;
     display: block;
     text-align: left;
 }
-/* Add a grey background color to dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }

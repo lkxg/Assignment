@@ -85,10 +85,10 @@
     %>
     <div class="news">
         <a href="shownews?newsId=<%=n.getnId()%>">
-            <img src="<%=n.getCover()%>" alt="新闻封面">
+            <img src=<%=n.getCover()%>>
             <h2><%=n.getTitle()%></h2>
             <p><%=n.getAbstracts()%></p>
-            <span class="origin">作者：<%=n.getUser().getUsername()%></span>&emsp;&emsp;
+            <span class="origin">作者：<%=n.getUser().getUsername()%></span>&emsp;&emsp;&emsp;&emsp;&emsp;
             <span class="author">来源：<%=n.getReprint().equals("")?"原创":n.getReprint()%></span><br><br>
             <span class="time">发布时间：<%=pTime%></span>
         </a>

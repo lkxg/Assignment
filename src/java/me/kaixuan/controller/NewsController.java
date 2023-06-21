@@ -30,9 +30,17 @@ public class NewsController {
     private UserService userService;
     @Resource
     private CommentService commentService;
+    /**
+     * 发布新闻
+     * @param request 用于获取参数
+     * @param session 用于获取当前用户
+     * @return 返回发布新闻页面
+     */
     @RequestMapping("/releasenews")
     public String releaseNews(News news, HttpSession session, HttpServletRequest request,@RequestParam("file") MultipartFile file) {
+        // 获取当前用户
         User user = userService.selectUserByUsername((String) session.getAttribute("username"), (String) session.getAttribute("password"));
+        // 设置作者id
         news.setAuthorId(user.getId());
         // 获取当前时间
         Date now = new Date();
@@ -42,25 +50,37 @@ public class NewsController {
         String nowStr = sdf.format(now);
         // 将字符串转换为Timestamp类型
         Timestamp nowTime = Timestamp.valueOf(nowStr);
+        // 设置发布时间
         news.setPublishTime(nowTime);
+        // 设置状态为待审核
         news.setStatusId(1);
         String path = null;
+        // 获取新闻来源
         String origin = request.getParameter("origin");
+        // 获取新闻类型
         String newsType = request.getParameter("newsType");
         if (!file.isEmpty()) {
+            // 获取文件名
             try {
+                // 文件保存路径
                 byte[] bytes = file.getBytes();
+                // 获取项目路径
                 Path paths = Paths.get("E:\\WorkPlace\\web_workplace\\Assignment\\web\\image\\" + file.getOriginalFilename());
+                // 写入文件
                 Files.write(paths, bytes);
+                // 设置图片路径
                 path = "/image/" + file.getOriginalFilename();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        // 设置封面
         news.setCover(path);
+        // 设置新闻来源
         if (origin.equals("reprint")) {
             news.setReprint(request.getParameter("reprint"));
         }
+        // 设置新闻类型
         if (newsType.equals("yule")){
             news.setCategoryId(1);
         }
@@ -82,8 +102,11 @@ public class NewsController {
         if (newsType.equals("qita")){
             news.setCategoryId(7);
         }
+        // 调用service层方法插入新闻
         newsService.insertNews(news);
+        // 设置提示信息
         request.setAttribute("msg","发布成功");
+        // 返回发布新闻页面
         return "forward:release";
     }
     @RequestMapping("/check")

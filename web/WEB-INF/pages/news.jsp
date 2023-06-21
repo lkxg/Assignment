@@ -99,11 +99,12 @@
 <body>
 <jsp:include page="head.jsp"/>
 <header>
-    <h1>${news.title}</h1>
+    <% News news = (News) request.getAttribute("showNews");%>
+    <h1><%=news.getTitle()%></h1>
     <br>
     <div class="meta">
-        <span class="author" style="margin-left: 450px">作者：${news.user.username}</span>
-        <% News news = (News) request.getAttribute("showNews");
+        <span class="author" style="margin-left: 450px">作者：<%=news.getUser().getUsername()%></span>
+        <%
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String pTime = sdf.format(news.getPublishTime());
         %>
@@ -112,14 +113,14 @@
 </header>
 <main>
     <article>
-      ${news.content}
+    <%=news.getContent()%>
     </article>
 </main>
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <div class="container" style="margin-left: 30px;margin-right: 200px;margin-top: 10px;margin-bottom: 10px;">
     <form method="post" enctype="multipart/form-data"  action="/addcomment" >
         <div class="form-group">
-            <label>评论</label>
+            <label style="display: block;font-size: large;">评论</label>
             <br>
             <textarea id="textarea" name="content">
             </textarea>
