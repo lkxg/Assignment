@@ -1,13 +1,28 @@
-/* Style the navbar */
 .navbar {
     height: 80px;
     overflow: hidden;
-    background-color: #7b736d;
+    background-color: #a29894;
     font-family: Arial, Helvetica, sans-serif;
 }
-/* Navbar links */
+@keyframes color-change {
+    0% {
+        background-color: rgb(201, 123, 154);
+    }
+    25% {
+        background-color: rgb(141, 225, 175);
+    }
+    50% {
+        background-color: rgb(155, 195, 255);
+    }
+    75% {
+        background-color: rgb(239, 175, 133);
+    }
+    100% {
+        background-color: rgb(225, 151, 233);
+    }
+}
 .navbar a {
-    font-size:18px;
+    font-size:19px;
     float: left;
     display: block;
     color: #ffffff;
@@ -15,12 +30,10 @@
     padding: 28px 30px;
     text-decoration: none;
 }
-/* Dropdown */
 .dropdown {
     float: right;
     overflow: hidden;
 }
-/* Dropdown button */
 .dropbtn {
     font-size: 18px;
     border: none;
@@ -31,26 +44,23 @@
     font-family: inherit;
     margin: 0;
 }
-/* Add a red background color to navbar dropdown links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #03A9F4;
+    background-color: #2b96c7;
     color: #ffffff;
 }
 .dropdown-content a:hover {
-    background-color: #007bb4;
+    background-color: #2b96c7;
 }
-/* Dropdown content (hidden by default) */
 .dropdown-content {
     display: none;
     position: absolute;
     z-index: 1;
 }
-/* Links inside the dropdown */
 .dropdown-content a {
     background-color:#03A9F4;
     float: none;
     color: #ffffff;
-    padding: 14px 34px;
+    padding: 14px 45px;
     text-decoration: none;
     display: block;
     text-align: left;
@@ -58,11 +68,9 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
-/* Add a pointer on navbar links and dropdown buttons */
 .navbar a, .dropdown .dropbtn {
     cursor: pointer;
 }
-/* Style the avatar */
 .avatar {
     vertical-align: middle;
     width: 35px;
@@ -207,4 +215,7 @@ body, button, input {
     .search-btn {
         background: #f1f1f1;
     }
+}
+.font {
+    animation: color-change 15s infinite;
 }

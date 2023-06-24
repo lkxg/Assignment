@@ -55,7 +55,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="jquery-3.1.1" level="application" />
-    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="plugins" level="application" />
     <orderEntry type="library" name="jquery-ui" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="L2Dwidget.0" level="application" />
+    <orderEntry type="library" name="L2Dwidget" level="application" />
+    <orderEntry type="library" name="emojiCursor" level="application" />
+    <orderEntry type="library" name="ghostCursor" level="application" />
+    <orderEntry type="library" name="batsCursor" level="application" />
+    <orderEntry type="library" name="b0d3af6dfc" level="application" />
+    <orderEntry type="library" name="emojiCursor" level="application" />
   </component>
 </module>

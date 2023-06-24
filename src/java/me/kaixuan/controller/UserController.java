@@ -212,28 +212,63 @@ public class UserController {
             return "info";
         }
     }
+    /**
+     * 更新用户信息
+     * @param request  请求获取用户信息
+     * @param response 更新cookie
+     * @param model    控制器和视图之间传递数据
+     * @param file     上传的图片
+     * @return 返回到info.jsp
+     */
 
     @RequestMapping("/updateinfo")
-    public String updateInfo(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+    public String updateInfo(@RequestParam("file") MultipartFile file, HttpServletRequest request,Model model, HttpServletResponse response) {
+        //获取用户信息
         User user = request.getSession().getAttribute("userManage") == null ? ((User) request.getSession().getAttribute("user")) : ((User) request.getSession().getAttribute("userManage"));
+        //判断是否为管理员
         boolean isAmdin = request.getSession().getAttribute("userManage") == null ? false : true;
+        //用户类型
         Integer userType = null;
+        //判断是否为管理员
         if (isAmdin) {
+            //设置用户类型
             userType = request.getParameter("userType").equals("common") ? 2 : 3;
         }
+        //获取用户信息
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar") == null ? user.getAvatar() : request.getParameter("avatar");
+        //获取cookie
         Cookie[] cookies = request.getCookies();
         String path = null;
-        if (!file.isEmpty()) {
+        //判断上传文件是否为空
+        if (!file.isEmpty() && file.getSize() > 0) {
+            //获取原文件名
+            String originalFilename = file.getOriginalFilename();
+            //设置文件上传路径
+            String dirPath = request.getServletContext().getRealPath("/upload/");
+            System.out.println(dirPath);
+            //判断文件夹是否存在
+            File filePath = new File(dirPath);
+            //若不存在，则创建文件夹
+            if (!filePath.exists()) {
+                filePath.mkdirs();
+            }
+            //获取用户名
+            String userName = (String) request.getSession().getAttribute("username");
+            //设置新文件名
+            String newFilename = userName + "_" + UUID.randomUUID() + "_" + originalFilename;
+            System.out.println(newFilename);
             try {
-                byte[] bytes = file.getBytes();
-                Path paths = Paths.get("E:\\WorkPlace\\web_workplace\\Assignment\\web\\image\\" + file.getOriginalFilename());
-                Files.write(paths, bytes);
-                path = "/image/" + file.getOriginalFilename();
-            } catch (Exception e) {
-                e.printStackTrace();
+                //将文件写入指定路径
+                file.transferTo(new File(dirPath + newFilename));
+                //设置文件路径
+                path = "/upload/" + newFilename;
+                //设置消息，用于前端提示
+                model.addAttribute("imgurl", path);
+                model.addAttribute("msg", "上传成功");
+            } catch (IOException e) {
+                model.addAttribute("msg", "上传失败");
             }
         }
         if (avatar.equals("avatar")) {
@@ -556,7 +591,7 @@ public class UserController {
     /**
      * 发送注册邮箱验证码
      *
-     * @param mail      邮箱
+     * @param email      邮箱
      * @param userName  用户名
      * @param password  密码
      * @param password2 重复密码
@@ -565,18 +600,18 @@ public class UserController {
      */
 
     @RequestMapping("/sendmail")
-    public String sendMail(String mail, String userName, String password, String password2, Model model) {
+    public String sendMail(String email, String userName, String password, String password2, Model model) {
         try {
             //获得sendEmailUtil对象
             SendEmailUtil sendEmailUtil = new SendEmailUtil();
             //发送邮件验证码
-            sendEmailUtil.sendEmail(mail, "注册验证码", "您好，" + userName + "，您正在注册本网站账号，您的验证码为: " + code + " 【本验证码10分钟内有效，如果不是您的操作，请忽略】");
+            sendEmailUtil.sendEmail(email, "注册验证码", "您好，" + userName + "，您正在注册本网站账号，您的验证码为: " + code + " 【本验证码10分钟内有效，如果不是您的操作，请忽略】");
             //设置成功提示信息
             model.addAttribute("msg", "验证码发送成功");
             //由于页面刷新，须重新自动填入用户已输入的用户名、密码、邮箱、重复密码
             model.addAttribute("userName", userName);
             model.addAttribute("password", password);
-            model.addAttribute("mail", mail);
+            model.addAttribute("mail", email);
             model.addAttribute("password2", password2);
             //返回reg
             return "forward:reg";

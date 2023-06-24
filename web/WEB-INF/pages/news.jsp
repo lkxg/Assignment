@@ -16,7 +16,9 @@
             selector: '#textarea',
             language: 'zh-Hans',
             branding: false,
-            height: 200,
+            height: 150,
+            width:500,
+            menubar: false,
             plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak ' +
                 'searchreplace wordcount visualblocks visualchars code fullscreen ' +
                 'insertdatetime media nonbreaking save table contextmenu directionality ' +
@@ -101,7 +103,6 @@
 <header>
     <% News news = (News) request.getAttribute("showNews");%>
     <h1><%=news.getTitle()%></h1>
-    <br>
     <div class="meta">
         <span class="author" style="margin-left: 450px">作者：<%=news.getUser().getUsername()%></span>
         <%

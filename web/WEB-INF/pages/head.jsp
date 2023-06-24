@@ -1,24 +1,33 @@
-<%@ page import="me.kaixuan.entity.News" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>首页</title>
-  <link rel="stylesheet" href="/css/head.css">
+  <script src="https://kit.fontawesome.com/b0d3af6dfc.js" crossorigin="anonymous"></script>
+  <script src="https://blog-static.cnblogs.com/files/axqa/emojiCursor.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/head.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript" src="/js/head.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/head.js"></script>
+  <style>
+    @font-face {
+      font-family:'test';
+      src: url("${pageContext.request.contextPath}/font/hanyisunshangxiangjianti.ttf");
+    }
+    *{
+      font-family: 'test', 'PingFang SC', sans-serif;
+    }
+  </style>
 </head>
 <body>
 <div class="navbar" style="display: flex;">
-  <a href="main">首页</a>
-  <a href="/news?newsType=1">娱乐</a>
-  <a href="/news?newsType=2">体育</a>
-  <a href="/news?newsType=3">科技</a>
-  <a href="/news?newsType=4">电影</a>
-  <a href="/news?newsType=5">游戏</a>
-  <a href="/news?newsType=6">软件</a>
-  <a href="/news?newsType=7" style="margin-right: 0px;">其他</a>
-  <form action="/search" class="search-bar" style="display: flex;padding-top: 20px;justify-content: flex-end;">
+  <a href="${pageContext.request.contextPath}/main"><img width="22" height="22" src="${pageContext.request.contextPath}/image/home.png" alt="home"/>首页</a>
+  <a href="${pageContext.request.contextPath}/news?newsType=1"><img width="22" height="22" src="${pageContext.request.contextPath}/image/dancing-party.png" alt="dancing-party"/>娱乐</a>
+  <a href="${pageContext.request.contextPath}/news?newsType=2"><img width="22" height="22" src="${pageContext.request.contextPath}/image/basketball.png" alt="basketball"/><span style="text-align: center;">体育</span></a>
+  <a href="${pageContext.request.contextPath}/news?newsType=3"><img width="22" height="22" src="${pageContext.request.contextPath}/image/smart-home-automation.png" alt="smart-home-automation"/>科技</a>
+  <a href="${pageContext.request.contextPath}/news?newsType=4"><img width="22" height="22" src="${pageContext.request.contextPath}/image/3d-glasses.png" alt="3d-glasses"/>电影</a>
+  <a href="${pageContext.request.contextPath}/news?newsType=5"><img width="22" height="22" src="${pageContext.request.contextPath}/image/ds3-tool.png" alt="ds3-tool"/>游戏</a>
+  <a href="${pageContext.request.contextPath}/news?newsType=6"><img width="22" height="22" src="${pageContext.request.contextPath}/image/android-app-drawer.png" alt="android-app-drawer"/>软件</a>
+  <a href="${pageContext.request.contextPath}/news?newsType=7" style="margin-right: 0px;"><img width="22" height="22" src="${pageContext.request.contextPath}/image/connection-status-off--v1.png" alt="connection-status-off--v1"/>其他</a>
+  <form action="${pageContext.request.contextPath}/search" class="search-bar" style="display: flex;padding-top: 20px;justify-content: flex-end;width: 300px;margin-left: 0px;">
     <input type="search" name="searchTitle" pattern=".*\S.*" required style="margin-bottom: 20px;font-size: 16px;">
     <button class="search-btn" type="submit">
       <span>Search</span>
@@ -65,7 +74,7 @@
     <button class="dropbtn" onclick="myFunction()" style="padding-top: 15px;padding-bottom: 15px;">
       <img src="${cookie.avatar.value}"  class="avatar" style="width: 50px ; height: 50px" >
       <%=usernameValue%>
-      <i class="fa fa-caret-down"></i>
+      <i class="fa-solid fa-angle-down"></i>
     </button>
     <div class="dropdown-content" id="myDropdown">
       <a href="info">个人资料</a>

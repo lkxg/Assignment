@@ -8,7 +8,7 @@
     <title>新闻</title>
     <style>
         body {
-            background-image: url("https://www.helloimg.com/images/2023/06/13/oshdvE.png");
+            background-image: url("https://www.helloimg.com/images/2023/06/13/oshlKS.png");
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;

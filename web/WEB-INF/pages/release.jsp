@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="${pageContext.request.contextPath}/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="https://cdn.tiny.cloud/1/nfr5439i038n4jrl7s55m1td7m1kse839qb97ne0yzcxbj0l/tinymce/6/plugins.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/ac14izp8ogmtbb5jcd4x9jur3svfypnf8a00f2umkmaty8wk/tinymce/6/plugins.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: '#textarea',
@@ -14,6 +14,7 @@
             branding: false,
             width: '100%',
             height: 800,
+            menubar: false,
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
